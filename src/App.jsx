@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { TodoContextProvider } from "./context/TodoContext";
 import Todo from "./components/Todo";
 import AddField from "./components/AddField";
@@ -25,6 +25,17 @@ function App() {
       prev.map((item) => (item.id === id ? { ...item, value } : item))
     );
   };
+
+  //Local Storage shit!!
+
+  useEffect(() => {
+    const data = JSON.parse(localStorage.getItem("todoList")) // localstorage stores data in string format
+    if(data) setTodoList(data) // do this only when data actually exists
+  }, [])
+  
+  useEffect(() => {
+    localStorage.setItem("todoList", JSON.stringify(todoList))
+  }, [todoList])
 
   return (
     <>
